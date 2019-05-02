@@ -1,0 +1,21 @@
+{"name":"Employee Name","type":"StringType","nulla":true}
+{"name":"Employee Number","type":"IntegerType","nulla":true}
+{"name":"State","type":"StringType","nulla":true}
+{"name":"Zip","type":"IntegerType","nulla":true}
+{"name":"DOB","type":"TimestampType","nulla":true}
+{"name":"Age","type":"IntegerType","nulla":true}
+{"name":"Sex","type":"StringType","nulla":true}
+{"name":"MaritalDesc","type":"StringType","nulla":true}
+{"name":"CitizenDesc","type":"StringType","nulla":true}
+{"name":"Hispanic/Latino","type":"StringType","nulla":true}
+{"name":"RaceDesc","type":"StringType","nulla":true}
+{"name":"Date of Hire","type":"TimestampType","nulla":true}
+{"name":"Date of Termination","type":"TimestampType","nulla":true}
+{"name":"Reason For Term","type":"StringType","nulla":true}
+{"name":"Employment Status","type":"StringType","nulla":true}
+{"name":"Department","type":"StringType","nulla":true}
+{"name":"Position","type":"StringType","nulla":true}
+{"name":"Pay Rate","type":"DoubleType","nulla":true}
+{"name":"Manager Name","type":"StringType","nulla":true}
+{"name":"Employee Source","type":"StringType","nulla":true}
+{"name":"Performance Score","type":"StringType","nulla":true}

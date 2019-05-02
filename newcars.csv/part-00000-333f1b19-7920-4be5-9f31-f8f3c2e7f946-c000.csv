@@ -1,0 +1,22 @@
+name,type,nulla
+Employee Name,StringType,true
+Employee Number,IntegerType,true
+State,StringType,true
+Zip,IntegerType,true
+DOB,TimestampType,true
+Age,IntegerType,true
+Sex,StringType,true
+MaritalDesc,StringType,true
+CitizenDesc,StringType,true
+Hispanic/Latino,StringType,true
+RaceDesc,StringType,true
+Date of Hire,TimestampType,true
+Date of Termination,TimestampType,true
+Reason For Term,StringType,true
+Employment Status,StringType,true
+Department,StringType,true
+Position,StringType,true
+Pay Rate,DoubleType,true
+Manager Name,StringType,true
+Employee Source,StringType,true
+Performance Score,StringType,true
