@@ -5,9 +5,12 @@
 package LocalDataHub
 
 import org.apache.spark.rdd.RDD
-import org.apache.spark.sql.{DataFrame, Row, SparkSession}
+import org.apache.spark.sql.{DataFrame, Row, SaveMode, SparkSession}
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.catalyst.parser.CatalystSqlParser
+
+import LocalDataHub.{Utils,GenerateDataFrameFromSchemaFile,GenerateSchemaFile}
+
 
 object test {
   val spark = SparkSession.builder().appName("barcode").master("local").getOrCreate()
@@ -23,11 +26,21 @@ object test {
     val schemaFileExcel = "..\\LocalDataHub\\output\\schema.xlsx"
     val schemaFileText =  "..\\LocalDataHub\\output\\schema.txt"
 
-
+    val utils = LocalDataHub.Utils
+    val generateSchemaFile = LocalDataHub.GenerateSchemaFile
+    val generateDataFrameFromSchemaFile = LocalDataHub.GenerateDataFrameFromSchemaFile
 
 
   //read the file into Dataframe
-    val coreDF =readFromCsv(coreDataset)
+    val coreDF =utils.readFromCsv(coreDataset)
+    println(s"code df ${coreDF.show}")
+    coreDF.write.option("usehHader",value = true).mode(SaveMode.Overwrite).csv(schemaFileCsv)
+
+    val csvdf = spark.read.option("useHeader",value = true).csv(schemaFileCsv)
+    println("csv dataframe====")
+    csvdf.show()
+
+    sys.exit
 
     coreDF.printSchema()
     //coreDF.show()
@@ -50,35 +63,36 @@ object test {
 
     println("Create DataFrame form the schema of another table")
     //Create DataFrame form the schema of another table
-    val schemaDf:DataFrame = generateDataFrameFromSchema(coreDF)//coreDF.schema.map(m=>(m.name, m.dataType.toString,m.nullable)).toDF("name","type","nulla")
+    val schemaDf:DataFrame = generateSchemaFile.generateDataFrameFromSchema(coreDF)//coreDF.schema.map(m=>(m.name, m.dataType.toString,m.nullable)).toDF("name","type","nulla")
     schemaDf.show
     schemaDf.printSchema()
 
     //write the DataFrame to a excel file
-     //writeToExcel(schemaFileExcel, schemaDf)
+     utils.writeToExcel(schemaFileExcel, schemaDf)
 
     //writeToCsv(schemaFileText,schemaDf)
 
     //sys.exit
 
     //read from a excel file
-    val excelDF = readFromExcel(schemaFileExcel);    println("read from excel file");    excelDF.show()
+    val excelDF = utils.readFromExcel(schemaFileExcel);    println("read from excel file");    excelDF.show()
     //sys.exit
 
     //Creating schema from the structfileds --> schema DataFrame
-    val schemaFromDFData = generateSchema(excelDF)//StructType(structFiled)
+    val schemaFromDFData = GenerateDataFrameFromSchemaFile.generateSchema(excelDF)//StructType(structFiled)
 
     //creating empty dataframe from Schema - (StructFiled)
     println("\n\nempty dataframe  from excel file ====> ")
     val emptyDF = createEmptyDF(schemaFromDFData)  //spark.createDataFrame(spark.sparkContext.emptyRDD[Row]/*spark.sparkContext.emptyRDD[Row]*/,structType1)
     emptyDF.show
 
-    val newdf= spark.createDataFrame(coreDF.rdd,schemaFromDFData)
+    val newdf= createDataFrameWithSchema(coreDF,schemaFromDFData)
     println("DF with data")
     newdf.show
 
   }
 
+/*
   def generateDataFrameFromSchema(coreDf:DataFrame):DataFrame={
     coreDf.schema.map(m=>(m.name, m.dataType.toString,m.nullable)).toDF("Column_Name","DataType","Nullable")
   }
@@ -89,12 +103,17 @@ object test {
       .map(field=>
         StructField(field(0).toString,CatalystSqlParser.parseDataType(field(1).toString.replace("Type", "")),field(2).asInstanceOf[Boolean])))
   }
+*/
 
+  def createDataFrameWithSchema(df:DataFrame,schema:StructType): DataFrame ={
+    spark.createDataFrame(df.rdd,schema)
+  }
 
   def createEmptyDF(schema:StructType):DataFrame={
     spark.createDataFrame(spark.sparkContext.emptyRDD[Row]/*spark.sparkContext.emptyRDD[Row]*/,schema)
   }
 
+/*
   //Function to Read from a excel file
   def readFromExcel(inputPath: String): DataFrame = {
     spark.read.format("com.crealytics.spark.excel")
@@ -138,6 +157,7 @@ object test {
   def writeToCsv(outputPath:String,df:DataFrame):Unit ={
     //df.write.option("overwrite",value = true).text(outputPath)
   }
+*/
 
   /*
       val structfiled=schemas.map(m=>StructField(m.name,m.dataType,m.nullable)).toArray//.foreach(println)
