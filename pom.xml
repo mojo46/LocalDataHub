@@ -11,7 +11,7 @@
         <scala.compat.version>2.11</scala.compat.version>
         <scala.version>${scala.compat.version}.8</scala.version>
         <spark.version>[2.3.1,)</spark.version>
-        <hadoop-mini-cluster.version>0.1.15</hadoop-mini-cluster.version>
+        <hadoop-mini-cluster.version>0.1.16</hadoop-mini-cluster.version>
     </properties>
 
     <repositories>
@@ -37,25 +37,25 @@
         <dependency>
             <groupId>com.github.sakserv</groupId>
             <artifactId>hadoop-mini-clusters</artifactId>
-            <version>0.1.16</version>
+            <version>${hadoop-mini-cluster.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.sakserv</groupId>
             <artifactId>hadoop-mini-clusters-common</artifactId>
-            <version>0.1.16</version>
+            <version>${hadoop-mini-cluster.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.sakserv</groupId>
             <artifactId>hadoop-mini-clusters-hdfs</artifactId>
-            <version>0.1.16</version>
+            <version>${hadoop-mini-cluster.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.sakserv</groupId>
             <artifactId>hadoop-mini-clusters-hivemetastore</artifactId>
-            <version>0.1.15</version>
+            <version>${hadoop-mini-cluster.version}</version>
         </dependency>
 
         <!--
