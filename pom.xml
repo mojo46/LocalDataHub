@@ -11,7 +11,6 @@
         <scala.compat.version>2.11</scala.compat.version>
         <scala.version>${scala.compat.version}.8</scala.version>
         <spark.version>[2.3.1,)</spark.version>
-        <hadoop-mini-cluster.version>0.1.16</hadoop-mini-cluster.version>
     </properties>
 
     <repositories>
@@ -31,47 +30,6 @@
     </pluginRepositories>
 
     <dependencies>
-
-         <!--local cluster setup-->
-
-        <dependency>
-            <groupId>com.github.sakserv</groupId>
-            <artifactId>hadoop-mini-clusters</artifactId>
-            <version>${hadoop-mini-cluster.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.sakserv</groupId>
-            <artifactId>hadoop-mini-clusters-common</artifactId>
-            <version>${hadoop-mini-cluster.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.sakserv</groupId>
-            <artifactId>hadoop-mini-clusters-hdfs</artifactId>
-            <version>${hadoop-mini-cluster.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.sakserv</groupId>
-            <artifactId>hadoop-mini-clusters-hivemetastore</artifactId>
-            <version>${hadoop-mini-cluster.version}</version>
-        </dependency>
-
-        <!--
-                <dependency>
-                    <groupId>org.apache.spark</groupId>
-                    <artifactId>spark-hive_${scala.compat.version}</artifactId>
-                    <version>[2.3.1,)</version>
-                    <scope>provided</scope>
-                    <exclusions>
-                        <exclusion>
-                            <groupId>org.codehaus.jackson</groupId>
-                            <artifactId>*</artifactId>
-                        </exclusion>
-                    </exclusions>
-                </dependency>
-        -->
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
@@ -83,23 +41,22 @@
             <version>4.4</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>org.scala-tools.testing</groupId>
+            <groupId>org.specs</groupId>
             <artifactId>specs</artifactId>
-            <version>1.6.2.2_1.5.0</version>
+            <version>1.2.5</version>
+            <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.11</artifactId>
-            <version>${spark.version}</version>
+            <version>2.3.0</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-sql_2.11</artifactId>
-            <version>${spark.version}</version>
+            <version>2.3.0</version>
         </dependency>
         <dependency>
             <groupId>com.crealytics</groupId>
@@ -111,7 +68,7 @@
         <dependency>
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_2.11</artifactId>
-            <version>3.2.0-SNAP5</version>
+            <version>3.2.0-SNAP10</version>
             <scope>test</scope>
         </dependency>
 

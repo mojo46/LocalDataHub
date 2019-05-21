@@ -5,42 +5,48 @@
 
 package LocalDataHub
 
-import org.apache.spark.sql.{DataFrame, Row, SparkSession}
+
+import org.apache.spark.SparkContext
+import org.apache.spark.sql.{DataFrame, Row, SaveMode, SparkSession}
 import org.apache.spark.sql.catalyst.parser.CatalystSqlParser
 import org.apache.spark.sql.types.{StructField, StructType}
 
 object GenerateDataFrame {
   val spark = SparkSession.builder().appName("barcode").master("local").getOrCreate()
 
-
   def main(args: Array[String]): Unit = {
 
     val utils = new Utils
 
-    val schemaFile = args(0) //"..\\LocalDataHub\\output\\schema.xlsx"
+    val schemaFile = /*args(0)*/  "..\\LocalDataHub\\output\\schema.xlsx" //..\LocalDataHub\output\schema.xlsx ..\LocalDataHub\sampleResources\core_dataset.csv ..\LocalDataHub\output\core_dataset.xlsx
 
-    val dataFilePath_CSV = args(1) //"D:\\LocalDataHub\\resources\\core_dataset.csv"
+    val dataFilePath_CSV = /*args(1)*/ "..\\LocalDataHub\\sampleResources\\core_dataset.csv"
 
-    val dataFileDF = utils.readFromCsv(dataFilePath_CSV)
+    val outputFilePath_Excel = /*args(2)*/ "..\\LocalDataHub\\output\\core_dataset.xlsx"
 
-    val schemaDf = utils.readFromExcel(schemaFile)
+    //val outputORCPath = "..\\LocalDataHub\\resources\\core_dataset.orc"
 
-    val schema = generateSchema(schemaDf)
+    val dataFileDF = utils.readFromCsv(dataFilePath_CSV); println("datafile df=>");dataFileDF.show()
+
+    val schemaDf = utils.readFromExcel(schemaFile) ; println("schema file df =>");schemaDf.show()
+
+    val schema = generateSchema(schemaDf) ; println("schema => "); schema.printTreeString()
 
     val dataFrameWithSchema = createDataFrameWithSchema(dataFileDF, schema)
 
-    dataFrameWithSchema.registerTempTable("coredata")
+    utils.writeToExcel(outputFilePath_Excel,dataFrameWithSchema)
 
-    spark.sql("select * from coredata")
 
-    dataFrameWithSchema.show
+    utils.removeOtherFiles("..\\LocalDataHub\\output")
+
   }
 
   //Generate schema from schemaDataFrame
   def generateSchema(schemaDF: DataFrame): StructType = {
+    schemaDF.rdd.collect.toList.foreach(println)
     StructType(schemaDF.rdd.collect.toList
       .map(field =>
-        StructField(field(0).toString, CatalystSqlParser.parseDataType(field(1).toString.replace("Type", "")), field(2).asInstanceOf[Boolean])))
+        StructField(field(0).toString, CatalystSqlParser.parseDataType(field(1).toString.replace("Type", "")), field(2).toString.toBoolean)))
   }
 
   def createDataFrameWithSchema(df: DataFrame, schema: StructType): DataFrame = {
