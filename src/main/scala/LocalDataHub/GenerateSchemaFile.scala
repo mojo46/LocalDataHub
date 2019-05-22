@@ -16,14 +16,13 @@ object GenerateSchemaFile {
   def main(args: Array[String]): Unit = {
 
 
-    val fileSystem = FileSystem.get(new Configuration())
+    //val fileSystem = FileSystem.get(new Configuration())
 
     val utils = new Utils
 
-    val csvDataFilePath = /*args(0)*/ "..\\LocalDataHub\\resources\\core_dataset.csv"
+    val csvDataFilePath = args(0) //"..\\LocalDataHub\\resources\\core_dataset.csv"
 
-    val outputExcelPath = /*args(1)*/ "..\\LocalDataHub\\output\\schema.xlsx"
-//    val outputCsvPath = "..\\LocalDataHub\\output\\schema.csv"
+    val outputExcelPath = args(1) //"..\\LocalDataHub\\output\\schema.xlsx"
 
     val csvDataDF = utils.readFromCsv(csvDataFilePath)
     println("---core data---")
@@ -41,11 +40,9 @@ object GenerateSchemaFile {
     println("--after ---")
 */
 
-
     println("--before write to excel file ---")
     utils.writeToExcel(outputExcelPath, schemaDF)
     println("--after ---")
-
 
 /*
     def getFilesFromPath(resourcePath: String, recusiveness: Boolean): List[LocatedFileStatus] = {

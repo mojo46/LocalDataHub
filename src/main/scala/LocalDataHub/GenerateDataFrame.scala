@@ -18,24 +18,29 @@ object GenerateDataFrame {
 
     val utils = new Utils
 
-    val schemaFile = /*args(0)*/  "..\\LocalDataHub\\output\\schema.xlsx" //..\LocalDataHub\output\schema.xlsx ..\LocalDataHub\sampleResources\core_dataset.csv ..\LocalDataHub\output\core_dataset.xlsx
+    val schemaFile = args(0) //"..\\LocalDataHub\\output\\schema.xlsx"
 
-    val dataFilePath_CSV = /*args(1)*/ "..\\LocalDataHub\\sampleResources\\core_dataset.csv"
+    val dataFilePath_CSV = args(1) //"..\\LocalDataHub\\sampleResources\\core_dataset.csv"
 
-    val outputFilePath_Excel = /*args(2)*/ "..\\LocalDataHub\\output\\core_dataset.xlsx"
+    val outputFilePath_Excel = args(2) //"..\\LocalDataHub\\output\\core_dataset.xlsx"
 
-    //val outputORCPath = "..\\LocalDataHub\\resources\\core_dataset.orc"
+    val dataFileDF = utils.readFromCsv(dataFilePath_CSV);
+    println("datafile df=>");
+    dataFileDF.show()
 
-    val dataFileDF = utils.readFromCsv(dataFilePath_CSV); println("datafile df=>");dataFileDF.show()
+    val schemaDf = utils.readFromExcel(schemaFile);
+    println("schema file df =>");
+    schemaDf.show()
 
-    val schemaDf = utils.readFromExcel(schemaFile) ; println("schema file df =>");schemaDf.show()
+    val schema = generateSchema(schemaDf);
+    println("schema => ");
+    schema.printTreeString()
 
-    val schema = generateSchema(schemaDf) ; println("schema => "); schema.printTreeString()
+    val dataFrameWithSchema = createDataFrameWithSchema(dataFileDF, schema);
+    println("dataframe with new schema=>");
+    dataFrameWithSchema.show()
 
-    val dataFrameWithSchema = createDataFrameWithSchema(dataFileDF, schema)
-
-    utils.writeToExcel(outputFilePath_Excel,dataFrameWithSchema)
-
+    utils.writeToExcel(outputFilePath_Excel, dataFrameWithSchema)
 
     utils.removeOtherFiles("..\\LocalDataHub\\output")
 
@@ -57,6 +62,4 @@ object GenerateDataFrame {
     spark.createDataFrame(spark.sparkContext.emptyRDD[Row] /*spark.sparkContext.emptyRDD[Row]*/ , schema)
   }
 
-
 }
-
