@@ -5,14 +5,10 @@
 package LocalDataHub
 
 import java.io.File
-import java.nio.file.FileSystemNotFoundException
-
-import org.apache.spark.{SparkContext, Success}
-import org.apache.spark.sql.{DataFrame, Row, SaveMode, SparkSession}
+import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 import org.apache.spark.sql.catalyst.parser.CatalystSqlParser
 import org.apache.spark.sql.types.{StructField, StructType}
 
-import scala.util._
 
 object GenerateDataFrame {
 
@@ -37,22 +33,17 @@ object GenerateDataFrame {
       if (file.getName.endsWith("csv")) {
 
         dataDF = utils.readFromCsv(dataFilePath)
-        println("---core data CSV FILE---")
-        dataDF.show()
-        dataDF.printSchema()
 
       }
       else if (file.getName.endsWith("xlsx")) {
 
         dataDF = utils.readFromExcel(dataFilePath)
-        println("---core data EXCEL File---")
-        dataDF.show()
-        dataDF.printSchema()
+
       }
     }
     catch {
       case ex: Exception => {
-        println("File shoul be either in CSV or Excel")
+        println("File should be either a CSV File or a Excel File")
         sys.exit()
       }
     }
@@ -62,54 +53,36 @@ object GenerateDataFrame {
     schemaDf.show()
 
     val schema = generateSchema(schemaDf);
-    println("schema => ");
+    println("schema Generated from schema File=> ");
     schema.printTreeString()
 
+    println("Comparing the number of cloumns ")
     if (dataDF.schema.length != schema.length) {
       println(s"The data File and the Schema File has Diffrent schema \n Data Contains :${dataDF.schema.length}\n Schema File Contains ${schema.length}")
       sys.exit()
     }
-    if (dataDF.schema.fields != schema.fields) {
-      println(s"The data File and Schema File have Diffrent schema")
-      println(" Data File Schema :");
-      dataDF.schema.printTreeString()
-      println(" Schema in the Schema File:");
-      schema.printTreeString()
-
-      val zippedSchema = dataDF.schema.fields zip schema.fields
-
-      val fieldsDiffType = zippedSchema.collect{
-        case (a: StructField, b: StructField) if a.dataType != b.dataType =>
-          (a.name, a.dataType)
-      }
-      fieldsDiffType.foreach(println)
-      sys.exit
-/*
-      println("the following Fields names are diffrent from from the schema table kindly change the schema Names :")
-*/
-
-
-/*
-      val fieldsDiffType = (sc zip (s2)).collect {
-        case (a: StructField, b: StructField) if a.dataType != b.dataType => (a.name, a.dataType)
-      }
-      println("the following Fields Types are diffrent from from the schema table kindly change the schema Names :")
-      fieldsDiffType.foreach(println)
-*/
-      sys.exit
+    else {
+      println("There is no issue with column length")
     }
 
-    /*
-        try{
-          dataDF.schema.length == schema.length
-          dataDF.schema == schema
-        }catch {
-          case exception: Exception => {
-            println("The data File and the Schema File has Diffrent schema")
-          }
-        }
-    */
+    println("\nChecking for Columns with Diffrent names")
 
+    if(dataDF.schema != schema) {
+
+      println("\nThere is some Column miss match =====> Check with the Schema File")
+
+      val diffrenceInNames = (dataDF.schema.fields zip schema.fields).collect{
+        case (a:StructField,b:StructField) if (a.name != b.name)&&(a.dataType != b.dataType) => (a.name,a.dataType)
+      }
+      if(diffrenceInNames.length != 0){
+        println(s"\nnumber of Columns diffrent Names or DataType or Order: ${diffrenceInNames.length}")
+        println("\nColumns diffrent Names or DataType or Order\n\n")
+        diffrenceInNames.foreach(println)
+      }
+
+      sys.exit()
+
+    }
 
     val dataFrameWithSchema = createDataFrameWithSchema(dataDF, schema)
     println("dataframe with new schema=>");
