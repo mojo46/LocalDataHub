@@ -4,7 +4,8 @@
 
 package LocalDataHub
 
-import org.apache.spark.sql.{DataFrame, Row, SparkSession, SQLContext}
+import java.io.File
+import org.apache.spark.sql.{DataFrame, Row, SQLContext, SparkSession}
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs._
 
@@ -15,65 +16,50 @@ object GenerateSchemaFile {
 
   def main(args: Array[String]): Unit = {
 
-
-    //val fileSystem = FileSystem.get(new Configuration())
+    val fileSystem = FileSystem.get(new Configuration())
 
     val utils = new Utils
 
-    val csvDataFilePath = args(0) //"..\\LocalDataHub\\resources\\core_dataset.csv"
+    val inputDataFilePath = args(0) //"..\\LocalDataHub\\resources\\core_dataset.csv"
 
-    val outputExcelPath = args(1) //"..\\LocalDataHub\\output\\schema.xlsx"
+    val outputSchemaFilePath = args(1) //"..\\LocalDataHub\\output\\schema.xlsx"
 
-    val csvDataDF = utils.readFromCsv(csvDataFilePath)
-    println("---core data---")
-    csvDataDF.show()
-    csvDataDF.printSchema()
+    var dataDF: DataFrame = null
 
-    val schemaDF = generateDataFrameFromSchema(csvDataDF)
+    val file = new File(inputDataFilePath)
+
+    try {
+
+      if (file.getName.endsWith("csv")) {
+
+        dataDF = utils.readFromCsv(inputDataFilePath)
+        println("---core data CSV FILE---")
+        dataDF.show()
+        dataDF.printSchema()
+
+      }
+      else if (file.getName.endsWith("xlsx")) {
+
+        dataDF = utils.readFromExcel(inputDataFilePath)
+        println("---core data EXCEL File---")
+        dataDF.show()
+        dataDF.printSchema()
+      }
+    }
+    catch {
+      case ex: Exception => {
+        println("File shoul be either in CSV or Excel")
+      }
+    }
+
+    val schemaDF = generateDataFrameFromSchema(dataDF)
     println("---schema Df---")
     schemaDF.show()
     schemaDF.printSchema()
 
-/*
-    println("---before write to csv file---")
-    utils.writeToCsv(outputCsvPath, schemaDF)
-    println("--after ---")
-*/
-
     println("--before write to excel file ---")
-    utils.writeToExcel(outputExcelPath, schemaDF)
+    utils.writeToExcel(outputSchemaFilePath, schemaDF)
     println("--after ---")
-
-/*
-    def getFilesFromPath(resourcePath: String, recusiveness: Boolean): List[LocatedFileStatus] = {
-      var seqPath: List[LocatedFileStatus] = List()
-      val lstFilesInit = fileSystem.globStatus(new Path(resourcePath))
-      val lstFiles = lstFilesInit.map(f => fileSystem.listFiles(f.getPath, recusiveness))
-
-      lstFiles.foreach(lst =>
-        while (lst.hasNext) {
-          val path = lst.next()
-          if (!path.isDirectory)
-            seqPath :+= path
-        }
-      )
-      seqPath
-    }
-*/
-
-/*
-    val list =getFilesFromPath("D:\\LocalDataHub\\output",true)
-    list.map(m=>m.getPath).foreach(println)
-
-     def merge(srcPath: String, dstPath: String): Unit = {
-       val hadoopConfig = new Configuration()
-       val hdfs = FileSystem.get(hadoopConfig)
-       FileUtil.copyMerge(hdfs, new Path(srcPath), hdfs, new Path(dstPath), true, hadoopConfig, null)
-       // the "true" setting deletes the source files once they are merged into the new output
-     }
-
-      merge(outputExcelPath,s"D:\\LocalDataHub\\output\\data.csv")
-*/
 
     utils.removeOtherFiles("..\\LocalDataHub\\output")
 
