@@ -10,9 +10,12 @@ import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs._
 
 object GenerateSchemaFile {
+
   val spark = SparkSession.builder().appName("barcode").master("local").getOrCreate()
 
   import spark.implicits._
+
+  val utils = new Utils
 
   def main(args: Array[String]): Unit = {
 
@@ -22,35 +25,11 @@ object GenerateSchemaFile {
 
     val inputDataFilePath = args(0) //"..\\LocalDataHub\\resources\\core_dataset.csv"
 
-    val outputSchemaFilePath = args(1) //"..\\LocalDataHub\\output\\schema.xlsx"
+    val outputSchemaFilePath = args(1) //"..\\LocalDataHub\\schema\\schema.xlsx"
 
-    var dataDF: DataFrame = null
+    val outputDataPath = args(2) //"D:\\LocalDataHub\\coreData"
 
-    val file = new File(inputDataFilePath)
-
-    try {
-
-      if (file.getName.endsWith("csv")) {
-
-        dataDF = utils.readFromCsv(inputDataFilePath)
-        println("---core data CSV FILE---")
-        dataDF.show()
-        dataDF.printSchema()
-
-      }
-      else if (file.getName.endsWith("xlsx")) {
-
-        dataDF = utils.readFromExcel(inputDataFilePath)
-        println("---core data EXCEL File---")
-        dataDF.show()
-        dataDF.printSchema()
-      }
-    }
-    catch {
-      case ex: Exception => {
-        println("File shoul be either in CSV or Excel")
-      }
-    }
+    val dataDF: DataFrame = utils.readFileFromPath(inputDataFilePath)
 
     val schemaDF = generateDataFrameFromSchema(dataDF)
     println("---schema Df---")
@@ -58,16 +37,29 @@ object GenerateSchemaFile {
     schemaDF.printSchema()
 
     println("--before write to excel file ---")
-    utils.writeToExcel(outputSchemaFilePath, schemaDF)
+    val schemaPath = outputSchemaFilePath + "\\schema.xlsx"
+    utils.writeToExcel(schemaPath, schemaDF)
     println("--after ---")
+    println(outputSchemaFilePath)
 
-    utils.removeOtherFiles("..\\LocalDataHub\\output")
+    utils.removeOtherFiles(outputSchemaFilePath)
 
+    val dataFileName: String = utils.findFileName(inputDataFilePath)
+
+    def loadData(outputDataPath: String) = {
+
+      val outputfile = outputDataPath + s"\\${dataFileName}"
+      println(s"output data path where the data is stored ${outputfile}")
+      utils.writeToCsv(outputfile, dataDF)
+    }
+
+    loadData(outputDataPath)
+    utils.displayData(outputDataPath)
   }
 
   //Genanerating DataFrame From table MetaData
   def generateDataFrameFromSchema(coreDf: DataFrame): DataFrame = {
-    coreDf.schema.map(m => (m.name, m.dataType.toString, m.nullable.asInstanceOf[Boolean])).toDF("Column_Name", "DataType", "Nullable")
+    coreDf.schema.map(m => (m.name, m.dataType, m.nullable.asInstanceOf[Boolean])).toDF("Column_Name", "DataType", "Nullable")
   }
 
 }
