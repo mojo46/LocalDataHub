@@ -2,38 +2,40 @@
  * created by z024376
 */
 
-
 package LocalDataHub
 
 import java.io.File
 import org.apache.spark.sql.{DataFrame, SaveMode, SparkSession}
 
 class Utils {
+
   val spark = SparkSession.builder().appName("barcode").master("local").getOrCreate()
 
-  def displayData(dataFilePath:String): Unit ={
+  def displayData(dataFilePath: String): Unit = {
+
     val dataPath = dataFilePath + "\\*.csv"
     val coreData = readFromCsv(dataPath: String)
     coreData.show(truncate = true)
     println(s"Number Of columns in the table :${coreData.count()}")
+
   }
 
   //Read File from path
   def readFileFromPath(inputDataFilePath: String): DataFrame = {
 
     inputDataFilePath match {
-      case _:String if inputDataFilePath.endsWith("csv") => readFromCsv(inputDataFilePath)
+      case _: String if inputDataFilePath.endsWith(".csv") => readFromCsv(inputDataFilePath)
 
-      case _:String if inputDataFilePath.endsWith("xlsx") => readFromExcel(inputDataFilePath)
+      case _: String if inputDataFilePath.endsWith(".xlsx") => readFromExcel(inputDataFilePath)
 
-      case _:String => null
+      case _: String => null
     }
 
   }
 
-  def findFileName(path:String):String={
+  def findFileName(path: String): String = {
     val file = new File(path)
-    return file.getName
+    file.getName
   }
 
 
@@ -49,7 +51,6 @@ class Utils {
 
   //Function to Write to a excel file
   def writeToExcel(output: String, newdf: DataFrame): Unit = {
-    /*val csvOutput = output+"schema.xlsx"*/
     newdf.coalesce(1).write
       .format("com.crealytics.spark.excel")
       .option("useHeader", value = true)
@@ -57,7 +58,6 @@ class Utils {
       .option("timestampFormat", value = "MM-dd-yyyy HH:mm:ss")
       .mode("overwrite")
       .save(output)
-
   }
 
   //Function to Read from a CSV file

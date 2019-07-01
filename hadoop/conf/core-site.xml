@@ -1,0 +1,313 @@
+  <configuration>
+    
+    <property>
+      <name>fs.azure.user.agent.prefix</name>
+      <value>User-Agent: APN/1.0 Hortonworks/1.0 HDP/</value>
+    </property>
+    
+    <property>
+      <name>fs.defaultFS</name>
+      <value>hdfs://bighdpope</value>
+      <final>true</final>
+    </property>
+    
+    <property>
+      <name>fs.gs.auth.service.account.json.keyfile</name>
+      <value>/etc/hadoop/conf/dlk_to_gcpkey.json</value>
+    </property>
+    
+    <property>
+      <name>fs.gs.http.transport.type</name>
+      <value>APACHE</value>
+    </property>
+    
+    <property>
+      <name>fs.gs.proxy.address</name>
+      <value>138.21.89.91:3128</value>
+    </property>
+    
+    <property>
+      <name>fs.gs.proxy.password</name>
+      <value>r4250116</value>
+    </property>
+    
+    <property>
+      <name>fs.gs.proxy.username</name>
+      <value>awecatg</value>
+    </property>
+    
+    <property>
+      <name>fs.protected.directories</name>
+      <value>/,/mapred,/mapred/system,/tmp,/user,/user/apps,/user/apps/hbase,/user/apps/hbase/data,/user/apps/hive</value>
+    </property>
+    
+    <property>
+      <name>fs.s3a.user.agent.prefix</name>
+      <value>User-Agent: APN/1.0 Hortonworks/1.0 HDP/</value>
+    </property>
+    
+    <property>
+      <name>fs.trash.interval</name>
+      <value>7200</value>
+    </property>
+    
+    <property>
+      <name>ha.failover-controller.active-standby-elector.zk.op.retries</name>
+      <value>120</value>
+    </property>
+    
+    <property>
+      <name>ha.zookeeper.acl</name>
+      <value>sasl:nn:rwcda</value>
+    </property>
+    
+    <property>
+      <name>ha.zookeeper.quorum</name>
+      <value>s2796aos.mc2.renault.fr:2181,s2797aos.mc2.renault.fr:2181,s2798aos.mc2.renault.fr:2181</value>
+    </property>
+    
+    <property>
+      <name>hadoop.custom-extensions.root</name>
+      <value>/hdp/ext/2.6/hadoop</value>
+    </property>
+    
+    <property>
+      <name>hadoop.http.authentication.simple.anonymous.allowed</name>
+      <value>true</value>
+    </property>
+    
+    <property>
+      <name>hadoop.http.staticuser.user</name>
+      <value>yarn</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.ambari-server-big_hdp_ope.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.ambari-server-big_hdp_ope.hosts</name>
+      <value>s2151aos.mc2.renault.fr</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hbase.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hbase.hosts</name>
+      <value>s2796aos.mc2.renault.fr,s2798aos.mc2.renault.fr</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hcat.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hcat.hosts</name>
+      <value>s2165aos.mc2.renault.fr,s2796aos.mc2.renault.fr,s2798aos.mc2.renault.fr</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hdfs.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hdfs.hosts</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hive.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hive.hosts</name>
+      <value>s2796aos.mc2.renault.fr,s2797aos.mc2.renault.fr,s2798aos.mc2.renault.fr,s2165aos.mc2.renault.fr,s3622tos.mc2.renault.fr,s3623tos.mc2.renault.fr,s3624tos.mc2.renault.fr,s3738tos.mc2.renault.fr,s3739tos.mc2.renault.fr</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.HTTP.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.HTTP.hosts</name>
+      <value>s2796aos.mc2.renault.fr,s2796aos.mc2.renault.fr\,s2796aos.mc2.renault.fr\\,s2798aos.mc2.renault.fr</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.httpfs.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.httpfs.hosts</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hue.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.hue.hosts</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.knox.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.knox.hosts</name>
+      <value>s2751tos.mc2.renault.fr,s2750tos.mc2.renault.fr</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.livy.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.livy.hosts</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.oozie.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.oozie.hosts</name>
+      <value>s2796aos.mc2.renault.fr,s2798aos.mc2.renault.fr</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.yarn.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.yarn.hosts</name>
+      <value>s2796aos.mc2.renault.fr,s2798aos.mc2.renault.fr</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.zeppelin-big_hdp_ope.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.zeppelin-big_hdp_ope.hosts</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.zeppelin.groups</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.proxyuser.zeppelin.hosts</name>
+      <value>*</value>
+    </property>
+    
+    <property>
+      <name>hadoop.security.auth_to_local</name>
+      <value>RULE:[1:$1@$0](ambari-qa-big_hdp_ope@DATALAKE.MC2.RENAULT.FR)s/.*/ambari-qa/
+RULE:[1:$1@$0](druid@DATALAKE.MC2.RENAULT.FR)s/.*/druid/
+RULE:[1:$1@$0](hbase-big_hdp_ope@DATALAKE.MC2.RENAULT.FR)s/.*/hbase/
+RULE:[1:$1@$0](hdfs-big_hdp_ope@DATALAKE.MC2.RENAULT.FR)s/.*/hdfs/
+RULE:[1:$1@$0](spark-big_hdp_ope@DATALAKE.MC2.RENAULT.FR)s/.*/spark/
+RULE:[1:$1@$0](superset-big_hdp_ope@DATALAKE.MC2.RENAULT.FR)s/.*/superset/
+RULE:[1:$1@$0](zeppelin-big_hdp_ope@DATALAKE.MC2.RENAULT.FR)s/.*/zeppelin/
+RULE:[1:$1@$0](.*@DATALAKE.MC2.RENAULT.FR)s/@.*//
+RULE:[2:$1@$0](activity_analyzer@DATALAKE.MC2.RENAULT.FR)s/.*/activity_analyzer/
+RULE:[2:$1@$0](activity_explorer@DATALAKE.MC2.RENAULT.FR)s/.*/activity_explorer/
+RULE:[2:$1@$0](amshbase@DATALAKE.MC2.RENAULT.FR)s/.*/ams/
+RULE:[2:$1@$0](amszk@DATALAKE.MC2.RENAULT.FR)s/.*/ams/
+RULE:[2:$1@$0](atlas@DATALAKE.MC2.RENAULT.FR)s/.*/atlas/
+RULE:[2:$1@$0](dn@DATALAKE.MC2.RENAULT.FR)s/.*/hdfs/
+RULE:[2:$1@$0](hbase@DATALAKE.MC2.RENAULT.FR)s/.*/hbase/
+RULE:[2:$1@$0](hive@DATALAKE.MC2.RENAULT.FR)s/.*/hive/
+RULE:[2:$1@$0](jhs@DATALAKE.MC2.RENAULT.FR)s/.*/mapred/
+RULE:[2:$1@$0](jn@DATALAKE.MC2.RENAULT.FR)s/.*/hdfs/
+RULE:[2:$1@$0](knox@DATALAKE.MC2.RENAULT.FR)s/.*/knox/
+RULE:[2:$1@$0](livy@DATALAKE.MC2.RENAULT.FR)s/.*/livy/
+RULE:[2:$1@$0](nfs@DATALAKE.MC2.RENAULT.FR)s/.*/hdfs/
+RULE:[2:$1@$0](nm@DATALAKE.MC2.RENAULT.FR)s/.*/yarn/
+RULE:[2:$1@$0](nn@DATALAKE.MC2.RENAULT.FR)s/.*/hdfs/
+RULE:[2:$1@$0](oozie@DATALAKE.MC2.RENAULT.FR)s/.*/oozie/
+RULE:[2:$1@$0](rangeradmin@DATALAKE.MC2.RENAULT.FR)s/.*/ranger/
+RULE:[2:$1@$0](rangertagsync@DATALAKE.MC2.RENAULT.FR)s/.*/rangertagsync/
+RULE:[2:$1@$0](rangerusersync@DATALAKE.MC2.RENAULT.FR)s/.*/rangerusersync/
+RULE:[2:$1@$0](rm@DATALAKE.MC2.RENAULT.FR)s/.*/yarn/
+RULE:[2:$1@$0](yarn@DATALAKE.MC2.RENAULT.FR)s/.*/yarn/
+DEFAULT</value>
+    </property>
+    
+    <property>
+      <name>hadoop.security.authentication</name>
+      <value>kerberos</value>
+    </property>
+    
+    <property>
+      <name>hadoop.security.authorization</name>
+      <value>true</value>
+    </property>
+    
+    <property>
+      <name>io.compression.codecs</name>
+      <value>org.apache.hadoop.io.compress.GzipCodec,org.apache.hadoop.io.compress.DefaultCodec,org.apache.hadoop.io.compress.SnappyCodec</value>
+    </property>
+    
+    <property>
+      <name>io.file.buffer.size</name>
+      <value>131072</value>
+    </property>
+    
+    <property>
+      <name>io.serializations</name>
+      <value>org.apache.hadoop.io.serializer.WritableSerialization</value>
+    </property>
+    
+    <property>
+      <name>ipc.client.connect.max.retries</name>
+      <value>50</value>
+    </property>
+    
+    <property>
+      <name>ipc.client.connection.maxidletime</name>
+      <value>30000</value>
+    </property>
+    
+    <property>
+      <name>ipc.client.idlethreshold</name>
+      <value>8000</value>
+    </property>
+    
+    <property>
+      <name>ipc.server.tcpnodelay</name>
+      <value>true</value>
+    </property>
+    
+    <property>
+      <name>mapreduce.jobtracker.webinterface.trusted</name>
+      <value>false</value>
+    </property>
+    
+    <property>
+      <name>net.topology.script.file.name</name>
+      <value>/etc/hadoop/conf/topology_script.py</value>
+    </property>
+    
+  </configuration>

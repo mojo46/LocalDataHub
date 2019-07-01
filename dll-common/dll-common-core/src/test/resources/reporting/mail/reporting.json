@@ -1,0 +1,25 @@
+{
+  "type": "reporting",
+  "mail":{
+    "conf":{
+      "smtp": "0.0.0.0",
+      "port": 1234
+    },
+    "messages": [
+      {
+        "type": [
+          "fail",
+          "success",
+          "trace",
+          "debug"
+        ],
+        "to": [
+          "unknown@renault-digital.com"
+        ],
+        "cc": [],
+        "body": "",
+        "format": "txt/html"
+      }
+    ]
+  }
+}

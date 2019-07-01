@@ -1,0 +1,1 @@
+{"path": "hdfs://127.0.0.1:12345/tmp/hadoop/csv/cars.csv","format": "csv","delimiter": ";","hasHeader": "true","loadOption": "all","fields":[]}

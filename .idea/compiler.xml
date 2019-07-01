@@ -6,8 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="LocalDataHub" />
+        <module name="dll-common-core" />
+        <module name="dll-common-test" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="LocalDataHub (1) (LocalDataHub)" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
