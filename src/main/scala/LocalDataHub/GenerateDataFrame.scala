@@ -4,11 +4,9 @@
 
 package LocalDataHub
 
-import java.io.File
 import org.apache.spark.sql.{DataFrame, Row, SparkSession}
 import org.apache.spark.sql.catalyst.parser.CatalystSqlParser
 import org.apache.spark.sql.types.{StructField, StructType}
-
 
 object GenerateDataFrame {
 
@@ -59,33 +57,6 @@ object GenerateDataFrame {
   // Validate schema
   def schemaValidation(inputFileSchema: StructType, schemaFileSchema: StructType): Unit = {
 
-/*
-    println("Comparing the number of columns\n")
-    (inputFileSchema,schemaFileSchema) match {
-      case (inputFileSchema,schemaFileSchema) if (inputFileSchema.length == schemaFileSchema.length) => {
-        (inputFileSchema,schemaFileSchema) match {
-          case (_,_) if(inputFileSchema!=schemaFileSchema) => {
-
-            println("\nThere is some Column miss match between ==> Columns in the Schema File and Columns of the Data File <===\n=====> Check with the Schema File")
-
-            val differenceInNames = (inputFileSchema.fields zip schemaFileSchema.fields).collect {
-              case (a: StructField, b: StructField) if (a.name != b.name) && (a.dataType != b.dataType) => (a.name, a.dataType)
-            }
-            if (differenceInNames.length != 0) {
-              println(s"\nnumber of Columns with different Names or DataType or Order: ${differenceInNames.length}")
-              println("\nColumns with different Names or DataType or Order\n")
-              differenceInNames.foreach(println)
-            }
-            sys.exit()
-          }
-        }
-      }
-      case (_,_) => {
-        println(s"The data File and the Schema File has Diffrent schema \n Data Contains :${inputFileSchema.length}\n Schema File Contains ${schemaFileSchema.length}")
-        sys.exit()
-      }
-    }
-*/
     if (inputFileSchema.length != schemaFileSchema.length) {
       println(s"The data File and the Schema File has Diffrent schema \n Data Contains :${inputFileSchema.length}\n Schema File Contains ${schemaFileSchema.length}")
       sys.exit()

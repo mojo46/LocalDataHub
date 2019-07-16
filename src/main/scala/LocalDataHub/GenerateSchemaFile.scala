@@ -4,8 +4,7 @@
 
 package LocalDataHub
 
-import java.io.File
-import org.apache.spark.sql.{DataFrame, Row, SQLContext, SparkSession}
+import org.apache.spark.sql.{DataFrame, SparkSession}
 import org.apache.hadoop.conf.Configuration
 import org.apache.hadoop.fs._
 
